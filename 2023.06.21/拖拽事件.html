@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            /* border: 2px solid red; */
+        }
+        body{
+            background-color: whitesmoke;
+        }
+
+        .outer {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+        }
+
+        .left {
+            width: 200px;
+            height: 100%;
+            /* cursor:no-drop  */
+            /* cursor:not-allowed */
+            background-color: rgb(255, 255, 255);
+            box-shadow: 0 0 4px rgb(197, 197, 197);
+        }
+
+        .left img {
+            width: 180px;
+            height: 80px;
+            margin-left: 10px;
+            margin-top: 10px;
+        }
+
+        .right {
+            width: calc(100% - 200px);
+            position: relative;
+        }
+
+        .right img {
+            width: 180px;
+        }
+        .right .xinxi{
+            position: absolute;
+            width: 200px;
+            height: 100px;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgb(224, 190, 255);
+            z-index: 999;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="outer">
+        <div class="left">
+            <img class="img1" data="xiao" src="./img/A1.jpg" alt="">
+            <img class="img2" src="./img/A2.jpg" alt="">
+            <img class="img3" src="./img/A3.jpg" alt="">
+            <img class="img4" src="./img/A4.jpg" alt="">
+        </div>
+        <div class="right">
+            <div class="xinxi">
+
+            </div>
+        </div>
+    </div>
+    <script>
+        var dom1 = document.querySelector('.left')
+        var dom2 = document.querySelector('.right')
+        var img1 = document.querySelector('.img1')
+        var img2 = document.querySelector('.img2')
+        var img3 = document.querySelector('.img3')
+        var img4 = document.querySelector('.img4')
+        var num =null
+
+        dom2.onmousedown=function(){
+            console.log('测试');
+        }
+        //鼠标按下事件
+        img1.onmousedown=function(e) {
+            num=0
+            return false;
+        }
+        img2.onmousedown=function(e) {
+            num=1
+            return false;
+        }
+        img3.onmousedown=function(e) {
+            num=2
+            return false;
+        }
+        img4.onmousedown=function(e) {
+            num=3
+            return false;
+        }
+        dom1.onmouseup=function(){
+            console.log('dom1鼠标抬起');
+        }
+        //样式
+        var styleImg = {
+            img1:{
+                width : 'calc(100% - 160px)',
+                height : '500px',
+                margin : '100px 80px',
+                position : 'absolute'
+            },
+            img2:{
+                width : 'calc(100% - 240px)',
+                height : '400px',
+                margin : '150px 120px',
+                position : 'absolute'
+            }
+        }
+        //鼠标松开事件
+        dom2.onmouseup=function(e) {
+            if(num!=null){
+                e.cancelBubble=true;
+                var img = document.createElement('img')
+                img.src = dom1.children[num].src
+                img.data = dom1.children[num].data
+                if(num==0) {
+                    img.style.width = 'calc(100% - 160px)'
+                    img.style.height = '500px'
+                    img.style.margin = '100px 80px'
+                    img.style.position = 'absolute'
+                    img.style.zIndex = '10'
+                }
+                if(num==1) {
+                    img.style.width = 'calc(50% - 240px)'
+                    img.style.height = '400px'
+                    img.style.margin = '150px 20px 150px 120px'
+                    img.style.position = 'absolute'
+                    img.style.zIndex = '20'
+                }
+                if(num==2) {
+                    img.style.width = 'calc(50% - 240px)'
+                    img.style.height = '400px'
+                    img.style.margin = '150px 120px 150px 20px'
+                    img.style.position = 'absolute'
+                    img.style.zIndex = '20'
+                    img.style.right = '0'
+                }
+                if(num==3) {
+                    img.style.width = 'calc(100% - 240px)'
+                    img.style.height = '260px'
+                    img.style.margin = '300px 120px 0px 120px'
+                    img.style.position = 'absolute'
+                    img.style.zIndex = '30'
+                }
+                console.info(img.style)
+                // img.style.left = e.pageX - 290 + 'px'
+                dom2.append(img)
+                num=null
+            }
+            for(let i=0; i<dom2.children.length; i++){
+            dom2.children[i].onmousedown=function(e){
+                // e.target==this
+                if(this.src=='http://127.0.0.1:5501/img/A1.jpg'){
+                    document.querySelector('.xinxi').innerText='这是第一张图'
+                }
+                if(this.src=='http://127.0.0.1:5501/img/A2.jpg'){
+                    document.querySelector('.xinxi').innerText='这是第二张图'
+                }
+                if(this.src=='http://127.0.0.1:5501/img/A3.jpg'){
+                    document.querySelector('.xinxi').innerText='这是第三张图'
+                }
+                if(this.src=='http://127.0.0.1:5501/img/A4.jpg'){
+                    document.querySelector('.xinxi').innerText='这是第四张图'
+                }
+            }
+        }
+
+            // console.log(e.target);
+        }
+
+    </script>
+</body>
+
+</html>
